@@ -9,4 +9,4 @@ CREATE TABLE burgers
     burger_name VARCHAR
     (40) NOT NULL,
     devoured BOOLEAN DEFAULT false
-)
+);
