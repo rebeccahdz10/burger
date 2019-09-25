@@ -1,43 +1,33 @@
-// METHODS TO UPDATE MYSQL
-var connection = require("./connection.js");
+var connection = require("./connection.js.js");
 
+var tableName = "burgers";
 
-
-//SELECT ALL
-
-//INSERT ONE
-
-//UPDATE ONE
-
-// Object Relational Mapper (ORM)
-
-// The ?? signs are for swapping out table or column names
-// The ? signs are for swapping out other values
-// These help avoid SQL injection
-// https://en.wikipedia.org/wiki/SQL_injection
 var orm = {
-    selectWhere: function (tableInput, colToSearch, valOfCol) {
-        var queryString = "SELECT * FROM ?? WHERE ?? = ?";
-        connection.query(queryString, [tableInput, colToSearch, valOfCol], function (err, result) {
+
+    // METHODS TO UPDATE MYSQL
+    //SELECT ALL
+    selectAll: function (result) {
+        var queryString = "SELECT * FROM" + tableName;
+        connection.query(queryString, function (err, result) {
+            console.log(result);
+        });
+    },
+    //INSERT ONE
+    insertOne: function (burger, callback) {
+        var queryString = "INSERT INTO" + tableName + "(burger_name, devoured) VALUES (?,?)";
+
+        connection.query(queryString, [burger.burger_name, burger.devoured], function (err, result) {
             if (err) throw err;
             console.log(result);
         });
     },
-    selectAndOrder: function (whatToSelect, table, orderCol) {
-        var queryString = "SELECT ?? FROM ?? ORDER BY ?? DESC";
-        console.log(queryString);
-        connection.query(queryString, [whatToSelect, table, orderCol], function (err, result) {
-            if (err) throw err;
-            console.log(result);
-        });
-    },
-    findWhoHasMost: function (tableOneCol, tableTwoForeignKey, tableOne, tableTwo) {
-        var queryString =
-            "SELECT ??, COUNT(??) AS count FROM ?? LEFT JOIN ?? ON ??.??= ??.id GROUP BY ?? ORDER BY count DESC LIMIT 1";
+    //UPDATE ONE
+    updateOne: function (burger, result) {
+        var queryString = "UPDATE " + tableName + "SET text=? WHERE id =?"
 
         connection.query(
             queryString,
-            [tableOneCol, tableOneCol, tableOne, tableTwo, tableTwo, tableTwoForeignKey, tableOne, tableOneCol],
+            [burger.burger_name, burger.devoured],
             function (err, result) {
                 if (err) throw err;
                 console.log(result);
