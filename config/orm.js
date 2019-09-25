@@ -1,4 +1,4 @@
-var connection = require("./connection.js.js");
+var connection = require("./connection.js");
 
 var tableName = "burgers";
 
